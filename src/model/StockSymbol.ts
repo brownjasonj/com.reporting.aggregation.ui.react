@@ -6,3 +6,5 @@ class StockSymbol {
     public bid: number;
     public ask: number;
 }
+
+export { StockSymbol };

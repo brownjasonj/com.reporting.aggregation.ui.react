@@ -3,11 +3,19 @@ import './App.css';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+
+import { LicenseManager } from 'ag-grid-enterprise';
+
+LicenseManager.setLicenseKey("Evaluation_License-_Not_For_Production_Valid_Until_25_May_2019__MTU1ODczODgwMDAwMA==156057ec2a5212d3fc17b2c425718067");
+
 import { AgGridReact } from 'ag-grid-react';
+
 import logo from './logo.svg';
 
-import { MockServer } from './MockServer';
-import { ViewPortDataSource } from './ViewPortDataSource';
+import { StockSymbol } from './model/StockSymbol';
+import { ViewPortWebSocketDataSource } from './viewport/ViewPortWebSocketDataSource';
+
+
 
 class App extends React.Component<any,any> {
   constructor(props: any) {
@@ -86,16 +94,14 @@ class App extends React.Component<any,any> {
   public onGridReady(params: any) {
     const httpRequest = new XMLHttpRequest();
     const updateData = (data: any) => {
-      const mockServer: MockServer = new MockServer();
-      mockServer.init(data);
-      const viewportDatasource: ViewPortDataSource = new ViewPortDataSource(mockServer);
-      params.api.setViewportDatasource(viewportDatasource);
+        const viewPortWebSocketDataSource: ViewPortWebSocketDataSource<StockSymbol> = new ViewPortWebSocketDataSource();
+        params.api.setViewportDatasource(viewPortWebSocketDataSource);
       setTimeout(() =>  {
         params.api.sizeColumnsToFit();
       }, 100);
     };
 
-    httpRequest.open("GET", "https://rawgit.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/stocks.json");
+    httpRequest.open("GET", "http://localhost:8080/stocksymbols", true);
     httpRequest.send();
     httpRequest.onreadystatechange = () => {
       if (httpRequest.readyState === 4 && httpRequest.status === 200) {
