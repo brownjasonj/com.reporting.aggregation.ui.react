@@ -2,15 +2,14 @@ import * as React from 'react';
 import './App.css';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-community/dist/styles/ag-theme-blue.css';
+import 'ag-grid-community/dist/styles/ag-theme-fresh.css';
 
 import { LicenseManager } from 'ag-grid-enterprise';
 
 LicenseManager.setLicenseKey("Evaluation_License-_Not_For_Production_Valid_Until_25_May_2019__MTU1ODczODgwMDAwMA==156057ec2a5212d3fc17b2c425718067");
 
 import { AgGridReact } from 'ag-grid-react';
-
-import logo from './logo.svg';
 
 import { StockSymbol } from './model/StockSymbol';
 import { ViewPortWebSocketDataSource } from './viewport/ViewPortWebSocketDataSource';
@@ -113,31 +112,24 @@ class App extends React.Component<any,any> {
   public render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-
-        <div 
-        className="ag-theme-balham"
-        style={{ 
-        height: '500px', 
-        width: '600px' }} 
-      >
-        <AgGridReact
-            columnDefs={this.state.columnDefs}
-            defaultColDef={this.state.defaultColDef}
-            debug={true}
-            rowSelection={this.state.rowSelection}
-            rowModelType={this.state.rowModelType}
-            getRowNodeId={this.state.getRowNodeId}
-            components={this.state.components}
-            onGridReady={this.onGridReady}
-          />
-      </div>
+          <div 
+          className="ag-theme-fresh"
+          style={{ 
+          height: '500px',
+          width: '95%',
+          }} 
+        >
+          <AgGridReact
+              columnDefs={this.state.columnDefs}
+              defaultColDef={this.state.defaultColDef}
+              debug={true}
+              rowSelection={this.state.rowSelection}
+              rowModelType={this.state.rowModelType}
+              getRowNodeId={this.state.getRowNodeId}
+              components={this.state.components}
+              onGridReady={this.onGridReady}
+            />
+        </div>
       </div>
     );
   }
