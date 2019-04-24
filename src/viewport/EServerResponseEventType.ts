@@ -1,7 +1,8 @@
 enum EServerResponseEventType {
     DataSetSize = "DataSetSize",
     ColumnUpdate = "ColumnUpdate",
-    DataSet = "DataSet"
+    DataSet = "DataSet",
+    DataSetBlock = "DataSetBlock"
 }
 
 export { EServerResponseEventType };

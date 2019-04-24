@@ -15,7 +15,7 @@ class ViewPortWebSocketDataSource<T> implements IViewportDatasource {
     // gets called by the grid, provides us with the callbacks we need
     public init(params: IViewportDatasourceParams) {
         this.viewportDataSourceParams = params;
-        this.webSocket = new WebSocket("ws://localhost:8080/stockticker");
+        this.webSocket = new WebSocket("ws://localhost:8080/stockticker/viewport");
 
         this.webSocket.onmessage = (ev:Event) => {this.webSocketOnMessage(ev)};
         this.webSocket.onopen = (ev:Event):any => {this.webSocket.send(JSON.stringify(new DataServerRequestAllData()))};
