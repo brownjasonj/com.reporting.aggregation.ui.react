@@ -126,25 +126,8 @@ class ServerSideGroupingGridComponent extends React.Component<any,any> {
       }
     
       public onGridReady(params: any) {
-        const serverSideGroupingDataSource: ServerSideGroupingDataSource<StockSymbol> = new ServerSideGroupingDataSource("ws://localhost:8080/stockticker/groupby");
+        const serverSideGroupingDataSource: ServerSideGroupingDataSource<StockSymbol> = new ServerSideGroupingDataSource(params.api, "ws://localhost:8080/stockticker/groupby");
         params.api.setServerSideDatasource(serverSideGroupingDataSource);
-/*
-        const httpRequest = new XMLHttpRequest();
-        const updateData = (data: any) => {
-            const serverSideGroupingDataSource: ServerSideGroupingDataSource<StockSymbol> = new ServerSideGroupingDataSource("ws://localhost:8080/stockticker/groupby");
-            params.api.setServerSideDatasource(serverSideGroupingDataSource);
-          setTimeout(() =>  {
-            params.api.sizeColumnsToFit();
-          }, 100);
-        };
-    
-        httpRequest.open("GET", "http://localhost:8080/stocksymbols", true);
-        httpRequest.send();
-        httpRequest.onreadystatechange = () => {
-          if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-            updateData(JSON.parse(httpRequest.responseText));
-          }
-        }; */
       };
     
       public render() {
@@ -167,6 +150,7 @@ class ServerSideGroupingGridComponent extends React.Component<any,any> {
                   sideBar={this.gridOptions.sideBar}
                   components={this.gridOptions.components}
                   onGridReady={this.onGridReady}
+                  purgeClosedRowNodes={true}
                 />
             </div>
           </div>
