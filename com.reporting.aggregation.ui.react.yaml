@@ -1,0 +1,39 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: com-reporting-aggregation-ui-react-service
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  selector:
+    name: com-reporting-aggregation-ui-react
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: com-reporting-aggregation-ui-react-deployment
+spec:
+  selector:
+    name: com-reporting-aggregation-ui-react
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: com-reporting-aggregation-ui-react
+    spec:
+      containers:
+        - name: com-reporting-aggregation-ui-react
+          image: jajabro/com.reporting.aggregation.ui.react:0.3.6
+          imagePullPolicy: Always
+          env:
+            - name: REACT_APP_AG_GRID_LICENSE
+              value: "Evaluation_License-_Not_For_Production_Valid_Until_25_May_2019__MTU1ODczODgwMDAwMA==156057ec2a5212d3fc17b2c425718067"
+            - name: REACT_APP_GROUPBYSERVER_NAME
+              value: "localhost"
+            - name: REACT_APP_GROUPBYSERVER_PORT
+              value: "8080"
+          ports:
+            - containerPort: 3000

@@ -2,24 +2,27 @@ import { GridApi, IServerSideDatasource, IServerSideGetRowsParams, RowNode } fro
 import { DataServerResponse } from 'src/viewport/DataServerResponse';
 import { DataServerResponseDataSetBlock } from 'src/viewport/DataServerResponseDataSetBlock';
 import { EServerResponseEventType } from 'src/viewport/EServerResponseEventType';
-import { DataServerResponseColumnUpdate } from 'src/viewport/DataServerResponseColumnUpdate';
+// import { DataServerResponseColumnUpdate } from 'src/viewport/DataServerResponseColumnUpdate';
 
 class ServerSideGroupingDataSource<T> implements IServerSideDatasource {
     private gridApi: GridApi;
     private webSocket: WebSocket;
+
     private params: IServerSideGetRowsParams;
 
     constructor(gridapi: GridApi, url: string) {
         this.gridApi = gridapi;
         this.webSocket = new WebSocket(url);
         this.webSocket.onmessage = (ev:Event) => {this.webSocketOnMessage(ev)};
-        // this.webSocket.onopen = (ev:Event):any => {this.webSocket.send(JSON.stringify(new DataServerRequestAllData()))};
+        // this.webSocket.onopen = (ev:Event):any => {this.webSocketOpen = true;};
     }
 
 
     public getRows(params: IServerSideGetRowsParams): void {
-        this.webSocket.send(JSON.stringify(params.request));
         this.params = params;
+        const wait = (ms:number) => new Promise(res => setTimeout(res, ms));
+        wait(1000);
+        this.webSocket.send(JSON.stringify(this.params.request));
     }
 
     public updateRowByPath(path: string[]) {

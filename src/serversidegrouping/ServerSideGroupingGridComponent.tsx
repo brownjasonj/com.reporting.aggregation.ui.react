@@ -5,7 +5,7 @@ import { ServerSideGroupingDataSource } from './ServerSideGroupingDataSource';
 
 import { LicenseManager } from 'ag-grid-enterprise';
 
-LicenseManager.setLicenseKey("Evaluation_License-_Not_For_Production_Valid_Until_25_May_2019__MTU1ODczODgwMDAwMA==156057ec2a5212d3fc17b2c425718067");
+LicenseManager.setLicenseKey(`${process.env.REACT_APP_AG_GRID_LICENSE}`);
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -126,7 +126,21 @@ class ServerSideGroupingGridComponent extends React.Component<any,any> {
       }
     
       public onGridReady(params: any) {
-        const serverSideGroupingDataSource: ServerSideGroupingDataSource<StockSymbol> = new ServerSideGroupingDataSource(params.api, "ws://localhost:8080/stockticker/groupby");
+        const groupByServerName: string = `${process.env.REACT_APP_GROUPBYSERVER_NAME}`;
+        const groupByServerPort: string = `${process.env.REACT_APP_GROUPBYSERVER_PORT}`;
+        const groupByServerAddress: string = "ws://" + groupByServerName + ":"+ groupByServerPort + "/stockticker/groupby";
+        const httpDataService = "http://" + groupByServerName + ":"+ groupByServerPort + "/stocksymbols";
+    
+
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", httpDataService, true);
+        httpRequest.send();
+        httpRequest.onreadystatechange = () => {
+          if (httpRequest.readyState === 4 && httpRequest.status === 200) {
+            console.log(JSON.parse(httpRequest.responseText))
+          }
+        };
+        const serverSideGroupingDataSource: ServerSideGroupingDataSource<StockSymbol> = new ServerSideGroupingDataSource(params.api, groupByServerAddress);
         params.api.setServerSideDatasource(serverSideGroupingDataSource);
       };
     

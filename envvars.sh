@@ -1,0 +1,3 @@
+export REACT_APP_AG_GRID_LICENSE="Evaluation_License-_Not_For_Production_Valid_Until_25_May_2019__MTU1ODczODgwMDAwMA==156057ec2a5212d3fc17b2c425718067"
+export REACT_APP_GROUPBYSERVER_NAME="localhost"
+export REACT_APP_GROUPBYSERVER_PORT="8080"
