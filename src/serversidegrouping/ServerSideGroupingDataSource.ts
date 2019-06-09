@@ -1,7 +1,7 @@
 import { GridApi, IServerSideDatasource, IServerSideGetRowsParams, RowNode } from 'ag-grid-community';
-import { DataServerResponse } from 'src/viewport/DataServerResponse';
-import { DataServerResponseDataSetBlock } from 'src/viewport/DataServerResponseDataSetBlock';
-import { EServerResponseEventType } from 'src/viewport/EServerResponseEventType';
+import { DataServerResponse } from 'src/model/DataServerResponse';
+import { DataServerResponseDataSetBlock } from 'src/model/DataServerResponseDataSetBlock';
+import { EServerResponseEventType } from 'src/model/EServerResponseEventType';
 // import { DataServerResponseColumnUpdate } from 'src/viewport/DataServerResponseColumnUpdate';
 
 class ServerSideGroupingDataSource<T> implements IServerSideDatasource {

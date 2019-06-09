@@ -4,7 +4,7 @@ import 'ag-grid-community/dist/styles/ag-theme-fresh.css';
 import { LicenseManager } from 'ag-grid-enterprise';
 import * as React from 'react';
 import './App.css';
-import { ServerSideGroupingGridComponent } from './serversidegrouping/ServerSideGroupingGridComponent';
+import { RiskResultViewPortGridComponent } from './riskresultviewport/RiskResultViewPortGridComponent';
 
 
 console.log(process.env);
@@ -18,9 +18,9 @@ class App extends React.Component<any,any> {
   public render() {
     return (
       // tslint:disable-next-line:jsx-self-close
-      <ServerSideGroupingGridComponent>
+      <RiskResultViewPortGridComponent>
         
-      </ServerSideGroupingGridComponent>
+      </RiskResultViewPortGridComponent>
     );
   }
 }

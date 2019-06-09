@@ -1,11 +1,11 @@
 import { IViewportDatasource, IViewportDatasourceParams, RowNode } from 'ag-grid-community';
-import { DataServerRequestAllData } from 'src/viewport/DataServerRequestAllDate';
-import { DataServerRequestWindowSizeChange } from './DataServerRequestWindowSizeChange';
-import { DataServerResponse } from './DataServerResponse';
-import { DataServerResponseColumnUpdate } from './DataServerResponseColumnUpdate';
-import { DataServerResponseDataSet } from './DataServerResponseDataSet';
-import { DataServerResponseDataSetSize } from './DataServerResponseDataSetSize';
-import { EServerResponseEventType } from './EServerResponseEventType';
+import { DataServerRequestAllData } from 'src/model/DataServerRequestAllDate';
+import { DataServerRequestWindowSizeChange } from '../model/DataServerRequestWindowSizeChange';
+import { DataServerResponse } from '../model/DataServerResponse';
+import { DataServerResponseColumnUpdate } from '../model/DataServerResponseColumnUpdate';
+import { DataServerResponseDataSet } from '../model/DataServerResponseDataSet';
+import { DataServerResponseDataSetSize } from '../model/DataServerResponseDataSetSize';
+import { EServerResponseEventType } from '../model/EServerResponseEventType';
 
 
 class ViewPortWebSocketDataSource<T> implements IViewportDatasource {
