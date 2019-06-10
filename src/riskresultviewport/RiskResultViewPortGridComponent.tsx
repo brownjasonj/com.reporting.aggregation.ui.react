@@ -3,10 +3,14 @@ import * as React from 'react';
 import { Component } from 'react';
 import { DataServerRequestAllData } from 'src/model/DataServerRequestAllDate';
 import { DataServerRequestConnectionParameters } from 'src/model/DataServerRequestConnectionParamaters';
+import { DataServerRequestWindowSizeChange } from 'src/model/DataServerRequestWindowSizeChange';
 import { DataServerResponse } from 'src/model/DataServerResponse';
 import { DataServerResponseColumnUpdate } from 'src/model/DataServerResponseColumnUpdate';
+import { DataServerResponseDataSet } from 'src/model/DataServerResponseDataSet';
 import { DataServerResponseDataSetSize } from 'src/model/DataServerResponseDataSetSize';
+import { DataServerResponseRowUpdate } from 'src/model/DataServerResponseRowUpdate';
 import { EServerResponseEventType } from 'src/model/EServerResponseEventType';
+import { RiskResult } from 'src/model/RiskResult';
 import { StockSymbol } from 'src/model/StockSymbol';
 import { SimpleCellRenderer } from 'src/renderers/SimpleCellRenderer';
 import { RiskResultViewPortWebSocketDataSource } from './RiskResultViewPortWebSocketDataSource';
@@ -119,13 +123,19 @@ class RiskResultViewPortGridComponent extends Component<any,any> {
               console.info(JSON.stringify(cu));
               break;
           case EServerResponseEventType.DataSet:
-              console.info("Got a dataset response");
+              const rd: DataServerResponseDataSet<RiskResult<any>> = JSON.parse(ev.data);
+              console.info(JSON.stringify(rd));
+              break;
+          case EServerResponseEventType.RowUpdate:
+              const updateRow: DataServerResponseRowUpdate<RiskResult<any>> = JSON.parse(ev.data);
+              console.info(JSON.stringify(updateRow));
               break;
         }
         };
         webSocket.onopen = (ev:Event):any => {
-            webSocket.send(JSON.stringify(new DataServerRequestConnectionParameters("fxoptiondesk", "875a05e4-5bed-44ca-8c9b-4fd11b250b1f")));
+            webSocket.send(JSON.stringify(new DataServerRequestConnectionParameters("fxoptiondesk", "a0699e05-5df6-4d92-929b-90e20beaaffd")));
             webSocket.send(JSON.stringify(new DataServerRequestAllData()))
+            webSocket.send(JSON.stringify(new DataServerRequestWindowSizeChange(1, 10)));
         };
 
         const viewPortWebSocketDataSource: RiskResultViewPortWebSocketDataSource<StockSymbol> = new RiskResultViewPortWebSocketDataSource("ws://localhost:8082/riskresults/viewport","fxoptiondesk", "875a05e4-5bed-44ca-8c9b-4fd11b250b1f");
@@ -179,3 +189,4 @@ class RiskResultViewPortGridComponent extends Component<any,any> {
 }
 
 export { RiskResultViewPortGridComponent };
+

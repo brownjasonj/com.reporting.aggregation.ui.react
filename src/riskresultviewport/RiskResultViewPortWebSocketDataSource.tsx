@@ -1,6 +1,8 @@
 import { IViewportDatasource, IViewportDatasourceParams, RowNode } from 'ag-grid-community';
 import { DataServerRequestAllData } from 'src/model/DataServerRequestAllDate';
 import { DataServerRequestConnectionParameters } from 'src/model/DataServerRequestConnectionParamaters';
+import { DataServerResponseRowUpdate } from 'src/model/DataServerResponseRowUpdate';
+import { RiskResult } from 'src/model/RiskResult';
 import { DataServerRequestWindowSizeChange } from '../model/DataServerRequestWindowSizeChange';
 import { DataServerResponse } from '../model/DataServerResponse';
 import { DataServerResponseColumnUpdate } from '../model/DataServerResponseColumnUpdate';
@@ -60,11 +62,19 @@ class RiskResultViewPortWebSocketDataSource<T> implements IViewportDatasource {
                 const rd: DataServerResponseDataSet<T> = JSON.parse(event.data);
                 this.onRowData(rd);
                 break;
+            case EServerResponseEventType.RowUpdate:
+                const updateRow: DataServerResponseRowUpdate<RiskResult<any>> = JSON.parse(event.data);
+                this.onRowUpdate(updateRow);
+                break;
         }
     }
 
+    public onRowUpdate(rowUpdate: DataServerResponseRowUpdate<RiskResult<any>>): void{
+        console.info(rowUpdate);
+    }
+    
     // process rowData event
-    public onRowData(ds: DataServerResponseDataSet<T>) {
+    public onRowData(ds: DataServerResponseDataSet<T>): void {
         const rowDataFromServer = ds.dataSet;
         this.viewportDataSourceParams.setRowData(rowDataFromServer);
     };
