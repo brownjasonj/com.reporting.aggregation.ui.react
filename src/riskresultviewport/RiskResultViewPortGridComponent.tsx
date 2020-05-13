@@ -14,6 +14,7 @@ import { RiskResult } from 'src/model/RiskResult';
 import { StockSymbol } from 'src/model/StockSymbol';
 import { SimpleCellRenderer } from 'src/renderers/SimpleCellRenderer';
 import { RiskResultViewPortWebSocketDataSource } from './RiskResultViewPortWebSocketDataSource';
+import { DataServerResponseCalculationContextChangeEvent } from 'src/model/DataServerResponseCalculationContextChangeEvent';
 
 class RiskResultViewPortGridComponent extends Component<any,any> {
     private gridOptions: any = {
@@ -130,10 +131,14 @@ class RiskResultViewPortGridComponent extends Component<any,any> {
               const updateRow: DataServerResponseRowUpdate<RiskResult<any>> = JSON.parse(ev.data);
               console.info(JSON.stringify(updateRow));
               break;
+          case EServerResponseEventType.CalculationContextChangeEvent:
+              const calculationContext: DataServerResponseCalculationContextChangeEvent = JSON.parse(ev.data);
+              console.info(JSON.stringify(calculationContext));
+              break;
         }
         };
         webSocket.onopen = (ev:Event):any => {
-            webSocket.send(JSON.stringify(new DataServerRequestConnectionParameters("fxoptiondesk", "a0699e05-5df6-4d92-929b-90e20beaaffd")));
+            webSocket.send(JSON.stringify(new DataServerRequestConnectionParameters("fxoptiondesk", "fb3221c6-5d0a-41f7-a182-6ac00972d8fd")));
             webSocket.send(JSON.stringify(new DataServerRequestAllData()))
             webSocket.send(JSON.stringify(new DataServerRequestWindowSizeChange(1, 10)));
         };

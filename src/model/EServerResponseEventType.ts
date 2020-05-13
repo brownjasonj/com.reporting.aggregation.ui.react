@@ -1,4 +1,5 @@
 enum EServerResponseEventType {
+    CalculationContextChangeEvent = "CalculationContextChangeEvent",
     DataSetSize = "DataSetSize",
     ColumnUpdate = "ColumnUpdate",
     RowUpdate = "RowUpdate",
